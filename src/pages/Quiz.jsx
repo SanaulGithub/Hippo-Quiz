@@ -292,19 +292,16 @@ const Quiz = () => {
       }));
    };
 
-   // New form submit handler
    const handleSubmit = (e) => {
-      e.preventDefault(); // Stop default form submission
-      setIsLoading(true); // Show loader
+      e.preventDefault();
+      setIsLoading(true);
 
-      // Simulate an API call or processing
       setTimeout(() => {
-         // Navigate to the suggestions page after 2 seconds
+         localStorage.removeItem('quizStep');
          navigate('/suggestion');
-      }, 2000); // 2000ms = 2 seconds
+      }, 2000);
    };
 
-   // NEW: Show loading screen if isLoading is true
    if (isLoading) {
       return (
          <div
@@ -342,7 +339,6 @@ const Quiz = () => {
       );
    }
 
-   // Original component return (when not loading)
    return (
       <div className='quiz-container'>
          <div className='quiz-header'>
