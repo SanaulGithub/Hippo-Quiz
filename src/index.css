@@ -573,10 +573,10 @@ a {
    font-family: Wasted-Vindey, serif;
    font-size: 60px;
    color: var(--primary-black);
-   margin-bottom: 40px;
+   margin-bottom: 20px;
 }
 .suggestions-subtitle {
-   font-size: 26px;
+   font-size: 22px;
    color: var(--primary-blue);
    margin-bottom: 50px;
    font-weight: 500;
@@ -678,4 +678,42 @@ a {
 .suggestion-card-btn:hover {
    background: var(--primary-green);
    color: #fff;
+}
+
+.suggestions-page-container {
+   position: relative;
+   width: 100%;
+   min-height: 100vh;
+   overflow: hidden;
+}
+
+.cloud-overlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background: #f0f8ff;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   z-index: 100;
+   overflow: hidden;
+}
+
+.cloud-loading-text {
+   font-size: 1.2rem;
+   font-weight: 600;
+   color: #333;
+   margin-top: 20px;
+   z-index: 102;
+   position: relative;
+}
+
+.cloud-svg {
+   width: 150px;
+   height: auto;
+   opacity: 0.8;
+   z-index: 101;
 }
