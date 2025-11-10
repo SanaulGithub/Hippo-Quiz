@@ -12,12 +12,12 @@ const options = [
    { label: 'Weight Loss', img: img1, link: '/quiz/weight-loss' },
    { label: 'Stress & Calm', img: img4, link: '/quiz/stress-calm' },
    { label: 'Focus & Clarity', img: img2, link: '/quiz/focus-clarity' },
-   { label: 'Immunity Support', img: img5, link: '/quiz/immunity-support' }, // /quiz/immunity-support
-   { label: 'Libido & Balance', img: img3, link: '#' }, // /quiz/libido-balance
+   { label: 'Immunity Support', img: img5, link: '/quiz/immunity-support' },
+   { label: 'Libido & Balance', img: img3, link: '/quiz/libido-balance' },
    {
       label: 'Digestion & Gut Health',
       img: img6,
-      link: '#', // /quiz/digestion-gut-health
+      link: '/quiz/digestion-gut-health',
    },
 ];
 
