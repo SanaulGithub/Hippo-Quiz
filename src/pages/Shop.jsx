@@ -9,12 +9,16 @@ import img6 from '../assets/img6.svg';
 import arrow from '../assets/SVG.svg';
 
 const options = [
-   { label: 'Weight Loss', img: img1, link: '/quiz' },
-   { label: 'Stress & Calm', img: img4, link: '#' },
-   { label: 'Focus & Clarity', img: img2, link: '#' },
-   { label: 'Immunity Support', img: img5, link: '#' },
-   { label: 'Libido & Balance', img: img3, link: '#' },
-   { label: 'Digestion & Gut Health', img: img6, link: '#' },
+   { label: 'Weight Loss', img: img1, link: '/quiz/weight-loss' },
+   { label: 'Stress & Calm', img: img4, link: '/quiz/stress-calm' },
+   { label: 'Focus & Clarity', img: img2, link: '/quiz/focus-clarity' },
+   { label: 'Immunity Support', img: img5, link: '/quiz/immunity-support' }, // /quiz/immunity-support
+   { label: 'Libido & Balance', img: img3, link: '#' }, // /quiz/libido-balance
+   {
+      label: 'Digestion & Gut Health',
+      img: img6,
+      link: '#', // /quiz/digestion-gut-health
+   },
 ];
 
 const Shop = () => {
@@ -50,7 +54,7 @@ const Shop = () => {
                         </span>
                      </>
                   );
-                  return opt.link === '/quiz' ? (
+                  return (
                      <Link
                         to={opt.link}
                         key={opt.label}
@@ -70,24 +74,6 @@ const Shop = () => {
                      >
                         {content}
                      </Link>
-                  ) : (
-                     <div
-                        key={opt.label}
-                        className={`shop-option${
-                           isActive ? ' shop-option--active' : ''
-                        }`}
-                        style={{
-                           background: isActive
-                              ? 'var(--primary-green)'
-                              : '#e7ecf4',
-                           color: isActive ? '#fff' : '#000',
-                           position: 'relative',
-                        }}
-                        onMouseEnter={() => setHovered(idx)}
-                        onMouseLeave={() => setHovered(null)}
-                     >
-                        {content}
-                     </div>
                   );
                })}
             </div>

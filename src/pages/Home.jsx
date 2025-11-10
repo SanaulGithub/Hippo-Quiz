@@ -14,11 +14,11 @@ const Home = () => {
                Take a quick quiz to discover which Liquid Blenz herbal blends
                may support your energy, digestion, and overall wellness.
             </p>
-            <Link to='/shop' className='home-link'>
+            <Link to='/quiz' className='home-link'>
                Every herbal wellness options personalized to you.
             </Link>
 
-            <Link to='/shop' className='home-btn-link'>
+            <Link to='/quiz' className='home-btn-link'>
                <div className='home-btn'>
                   <button>Get Started</button>
                   <img src={Icon} alt='icon' />
