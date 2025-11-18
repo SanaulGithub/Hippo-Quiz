@@ -255,7 +255,7 @@ const allProducts = [
 
 const mapKeysToProducts = (keys, allProducts) => {
    if (!keys || keys.length === 0) {
-      return [allProducts[0]];
+      return allProducts.length > 0 ? [allProducts[0]] : [];
    }
 
    const keyMap = {
@@ -282,6 +282,15 @@ const mapKeysToProducts = (keys, allProducts) => {
          'Good Brain Tonic - Brain Health Support',
          'Liquid Blenz Sea Moss Natural Superfood Tonic',
       ],
+
+      stamina_tonic:
+         'Liquid Blenz Stamina Herbal Supplement for Men & Women, 24oz',
+      libido_tonic:
+         'Liquid Blenz Pure Libido – Daily Herbal Wellness Drink for Him & Her',
+      hormone_support:
+         'Fibroid Bully – Hormone Balance & Uterine Support Tonic',
+      menopause_support:
+         'Liquid Blenz Menopause Bully Natural Herbal Support for Women',
    };
 
    const foundProducts = [];
@@ -308,7 +317,10 @@ const mapKeysToProducts = (keys, allProducts) => {
             }
          }
       } else {
-         const product = allProducts.find((p) => p.name.includes(key));
+         // Fallback: try to find product by partial name match with key
+         const product = allProducts.find((p) =>
+            p.name.toLowerCase().includes(key.replace(/_/g, ' '))
+         );
          if (product && !productNames.has(product.name)) {
             foundProducts.push(product);
             productNames.add(product.name);
@@ -316,13 +328,18 @@ const mapKeysToProducts = (keys, allProducts) => {
       }
    });
 
-   return foundProducts.length > 0 ? foundProducts : [allProducts[0]];
+   return foundProducts.length > 0
+      ? foundProducts
+      : allProducts.length > 0
+      ? [allProducts[0]]
+      : [];
 };
 
 const getRecommendations = (topic, answers) => {
    switch (topic) {
       case 'stress-calm': {
          let recommendations = [];
+         // Logic based on 'stress_level'
          if (
             answers.stress_level === 'high' ||
             answers.stress_level === 'medium'
@@ -334,6 +351,7 @@ const getRecommendations = (topic, answers) => {
          ) {
             recommendations = ['good_brain'];
          } else {
+            // Default for stress-calm
             recommendations = ['full_reset_pack'];
          }
 
@@ -345,37 +363,43 @@ const getRecommendations = (topic, answers) => {
          if (addOnTriggers.some(Boolean)) {
             recommendations.push('flat_belly_bully');
          }
-         return recommendations;
+         return [...new Set(recommendations)];
       }
 
       case 'focus-clarity': {
          const scores = { brain: 0, brain_sea: 0, reset: 0 };
+         // Logic updated to use Q1, Q2, etc.
          const logic = {
             Q1: {
+               // focus_frequency
                Constantly: 'reset',
                Frequently: 'reset',
                Occasionally: 'brain',
                Rarely: 'brain',
             },
             Q2: {
+               // focus_time
                Morning: 'brain_sea',
                'Afternoon crash': 'brain_sea',
                Evenings: 'brain',
                'All day': 'reset',
             },
             Q3: {
+               // energy_level
                'Consistently tired': 'brain_sea',
                'Highs and lows': 'reset',
                Stable: 'brain',
                'Energetic all day': 'brain',
             },
             Q4: {
+               // caffeine_intake
                'Yes, multiple times daily': 'reset',
                'Once a day': 'brain_sea',
                Rarely: 'brain',
                Never: 'brain',
             },
             Q5: {
+               // fatigue_management
                'Coffee / energy drinks': 'reset',
                'Power naps': 'brain_sea',
                Exercise: 'brain',
@@ -383,6 +407,7 @@ const getRecommendations = (topic, answers) => {
                "I don't": 'reset',
             },
             Q6: {
+               // primary_goal
                'Productivity at work': 'reset',
                'Mental clarity': 'brain',
                'Motivation & energy': 'brain_sea',
@@ -390,11 +415,10 @@ const getRecommendations = (topic, answers) => {
             },
          };
 
-         Object.keys(logic).forEach((qKey, index) => {
-            const questionKey = `Q${index + 1}`;
-            const answer = answers[questionKey];
-            if (answer && logic[questionKey][answer]) {
-               const bucket = logic[questionKey][answer];
+         Object.keys(logic).forEach((key) => {
+            const answer = answers[key];
+            if (answer && logic[key][answer]) {
+               const bucket = logic[key][answer];
                scores[bucket]++;
             }
          });
@@ -411,7 +435,8 @@ const getRecommendations = (topic, answers) => {
          return ['good_brain'];
       }
 
-      case 'immunity': {
+      case 'immunity-support': {
+         // Logic based on support_type
          if (answers.support_type === 'fast_boost') return ['elderberry'];
          if (answers.support_type === 'preventive') return ['sea_moss'];
          if (answers.support_type === 'recovery_energy')
@@ -421,7 +446,7 @@ const getRecommendations = (topic, answers) => {
             answers.colds === 'often',
             answers.energy === 'always_tired',
             answers.diet === 'unbalanced',
-            answers.sleep === 'poor_varies',
+            answers.sleep === 'poor' || answers.sleep === 'varies', // Logic to match multiple poor sleep values
             answers.active === 'rarely',
             answers.stress === 'high',
          ];
@@ -432,51 +457,135 @@ const getRecommendations = (topic, answers) => {
          }
 
          if (answers.colds === 'rarely') return ['sea_moss'];
+         // Default fallback
          return ['elderberry', 'sea_moss'];
       }
 
-      case 'weight-loss': {
-         let primary = 'soursop_bitters';
-         let addons = [];
+      case 'libido-balance': {
+         let recommendations = [];
 
-         if (answers.body_focus === 'belly') primary = 'flat_belly_bully';
-         if (answers.experience_level === 'always')
-            primary = 'black_seed_bitters';
-
-         if (answers.challenge === 'cravings') addons.push('flat_belly_bully');
-         if (answers.challenge === 'low_energy') addons.push('sea_moss');
-         if (answers.challenge === 'metabolism')
-            addons.push('black_seed_bitters');
-         if (answers.challenge === 'stress') addons.push('good_brain');
-         if (answers.challenge === 'digestion') addons.push('flat_belly_bully');
-
-         if (answers.eating === 'processed') addons.push('black_seed_bitters');
-         if (answers.sleep === 'poor') addons.push('soursop_bitters');
-         if (answers.stress === 'often' || answers.stress === 'constant') {
-            addons.push('good_brain');
+         // Logic based on Q1 (current concern) and Q6 (goal)
+         if (
+            answers.Q1 === 'Low desire / libido' ||
+            answers.Q6 === 'Boost libido'
+         ) {
+            recommendations.push('libido_tonic');
+         }
+         if (
+            answers.Q1 === 'Low stamina or energy' ||
+            answers.Q3 === 'Every day'
+         ) {
+            recommendations.push('stamina_tonic');
+         }
+         if (
+            answers.Q1 === 'Hormonal imbalance' ||
+            answers.Q6 === 'Support hormonal balance'
+         ) {
+            recommendations.push('hormone_support');
+         }
+         if (answers.Q1 === 'Mood & confidence issues') {
+            recommendations.push('good_brain');
          }
 
-         if (answers.secondary_goal === 'energy') addons.push('sea_moss');
-         if (answers.secondary_goal === 'calm') addons.push('good_brain');
-         if (answers.secondary_goal === 'digestion')
-            addons.push('flat_belly_bully');
+         if (recommendations.length === 0) {
+            recommendations = ['libido_tonic', 'stamina_tonic'];
+         }
 
-         if (answers.support_preference === 'detox') return ['4_step_bundle'];
+         return [...new Set(recommendations)];
+      }
+
+      case 'digestion-gut-health': {
+         let recommendations = [];
+
+         if (
+            answers.Q1 === 'Daily' ||
+            answers.Q2 === 'All of the above' ||
+            answers.Q6 === 'Always uncomfortable'
+         ) {
+            recommendations = ['4_step_bundle'];
+         } else if (
+            answers.Q1 === 'A few times a week' ||
+            answers.Q2 === 'Irregular digestion' ||
+            answers.Q5 === 'Processed / convenience foods'
+         ) {
+            recommendations = ['flat_belly_bully', 'soursop_bitters'];
+         } else {
+            recommendations = ['soursop_bitters'];
+         }
+
+         if (answers.Q3 === 'Too high') {
+            recommendations.push('flat_belly_bully');
+         }
+         if (answers.Q5 === 'High protein') {
+            recommendations.push('black_seed_bitters');
+         }
+
+         return [...new Set(recommendations)];
+      }
+
+      case 'weight-loss': {
+         // Always main bundle
+         let primary = '';
+         let addons = [];
+         // -----------------------------
+         // Q1 — Weight Goal
+         // -----------------------------
+         if (answers.weight_goal === 'significant') {
+            addons.push('pure_soursop_bitters'); // Deep cleanse
+         }
+         if (answers.weight_goal === 'metabolism') {
+            addons.push('black_seed_bitters'); // For metabolism
+         }
+         // -----------------------------
+         // Q2 — Main Weight Loss Challenge
+         // -----------------------------
+         if (answers.challenge === 'metabolism') {
+            addons.push('black_seed_bitters');
+         }
+         if (answers.challenge === 'digestion') {
+            addons.push('pure_soursop_bitters');
+         }
+         if (answers.challenge === 'stress') {
+            addons.push('good_brain');
+         }
+         if (answers.challenge === 'cravings') {
+            addons.push('good_brain');
+         }
+         // -----------------------------
+         // Q3 — Secondary Goals
+         // -----------------------------
+         if (answers.secondary_goal === 'focus') {
+            addons.push('good_brain');
+         }
+         if (answers.secondary_goal === 'digestion') {
+            addons.push('sea_moss');
+         }
+         if (answers.secondary_goal === 'energy') {
+            addons.push('good_brain'); // OPTIONAL: Energy triggers Good Brain
+         }
+         // Remove duplicates
+         addons = [...new Set(addons)];
+         // -----------------------------
+         // FINAL DECISION LOGIC
+         // -----------------------------
+         // User chooses SIMPLE mode → primary + 1 addon only
+         if (answers.combination_preference === 'no') {
+            return ['soursop_bitters', addons[0]].filter(Boolean);
+         }
+         // User chooses COMBO → main bundle + addons
          if (
             answers.support_preference === 'combo' ||
             answers.combination_preference === 'yes'
          ) {
-            return ['4_step_bundle', ...addons];
+            return [primary, ...addons];
          }
-         if (answers.combination_preference === 'no') {
-            return [primary, addons[0]].filter(Boolean);
+         // User chooses DETOX → only detox bundle
+         if (answers.support_preference === 'detox') {
+            return [primary];
          }
-
+         // Default
          return [primary, ...addons];
       }
-
-      default:
-         return ['4_step_bundle'];
    }
 };
 
