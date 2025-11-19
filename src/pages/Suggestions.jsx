@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
@@ -12,77 +13,92 @@ const productDetails = {
    '4_STEP': {
       name: 'Liquid Blenz 4-Step Detox & Cleanse Bundle',
       img: ProductOne,
+      variantId: '47561910517982',
       link: 'https://liquidblenz.com/products/liquid-blenz-4-step-detox-cleanse-bundle',
    },
    FLAT_BELLY: {
       name: 'Liquid Blenz Flat Belly Bully',
       img: ProductTwo,
+      variantId: '45228119392478',
       link: 'https://liquidblenz.com/products/pure-flat-belly-bully',
    },
    SOURSOP: {
       name: 'Pure Soursop Bitters',
       img: ProductThree,
+      variantId: '43092143145182',
       link: 'https://liquidblenz.com/products/pure-soursop-bitters',
    },
    BLACK_SEED: {
       name: 'Pure Black Seed Bitters',
       img: ProductFour,
+      variantId: '43092117094622',
       link: 'https://liquidblenz.com/products/pure-black-seed-bitters',
    },
    SEA_MOSS: {
       name: 'Liquid Blenz Sea Moss Tonic',
       img: ProductFour,
+      variantId: '43363714171102',
       link: 'https://liquidblenz.com/products/liquid-blenz-sea-moss',
    },
    GOOD_BRAIN: {
       name: 'Good Brain Tonic',
       img: ProductOne,
+      variantId: '45640636563678',
       link: 'https://liquidblenz.com/products/good-brain-tonic',
    },
    IMMUNITY: {
       name: 'Pure Immunity Enhancer',
       img: ProductTwo,
+      variantId: '43092069318878',
       link: 'https://liquidblenz.com/products/pure-immunity-enhancer-elderberry',
    },
    SHILAJIT: {
       name: 'Pure Shilajit Tonic',
       img: ProductOne,
+      variantId: '45864109342942',
       link: 'https://liquidblenz.com/products/pure-shilajit-tonic',
    },
    WELLNESS_TRIO: {
-      name: 'Daily Wellness Trio',
+      name: 'Wellness Pack',
       img: ProductOne,
-      link: 'https://liquidblenz.com/products/healthy-power-pack',
+      variantId: '44392049377502',
+      link: 'https://liquidblenz.com/products/wellness-pack',
    },
    LIBIDO_KIT: {
-      name: 'Energy & Libido Boost Kit',
+      name: 'Pure Libido (Base)',
       img: ProductOne,
+      variantId: '43092047888606',
       link: 'https://liquidblenz.com/products/pure-libido',
    },
    PURE_LIBIDO: {
       name: 'Pure Libido',
       img: ProductOne,
+      variantId: '43092047888606',
       link: 'https://liquidblenz.com/products/pure-libido',
    },
    FIBROID: {
       name: 'Fibroid Bully',
       img: ProductOne,
+      variantId: '44618310222046',
       link: 'https://liquidblenz.com/products/fibroid-bully',
    },
    MENOPAUSE: {
       name: 'Menopause Bully',
       img: ProductOne,
+      variantId: '44551140704478',
       link: 'https://liquidblenz.com/products/menopause-bully',
    },
    PROSTATE: {
       name: 'Prostate Bully',
       img: ProductOne,
+      variantId: '44634083819742',
       link: 'https://liquidblenz.com/products/prostate-bully',
    },
    PERFORMANCE: {
-      name: 'Daily Performance Bundle',
+      name: 'Healthy Power Pack',
       img: ProductOne,
-      link: 'https://liquidblenz.com/products/build-your-box',
+      variantId: '44429876429022',
+      link: 'https://liquidblenz.com/products/healthy-power-pack',
    },
 };
 
@@ -112,13 +128,13 @@ const determineRecommendation = (topic, answers) => {
          if (checkAns('weight loss goals', 'Improve overall'))
             addOnKeys.push('BLACK_SEED');
 
-         if (checkAns('biggest challenge', 'Slow metabolism'))
+         if (checkAns('biggest challenge', 'metabolism'))
             addOnKeys.push('BLACK_SEED');
-         if (checkAns('biggest challenge', 'Poor digestion'))
+         if (checkAns('biggest challenge', 'digestion'))
             addOnKeys.push('SOURSOP');
          if (checkAns('biggest challenge', 'Stress'))
             addOnKeys.push('GOOD_BRAIN');
-         if (checkAns('biggest challenge', 'Cravings'))
+         if (checkAns('biggest challenge', 'cravings'))
             addOnKeys.push('GOOD_BRAIN');
          if (checkAns('biggest challenge', 'Low energy'))
             addOnKeys.push('SHILAJIT');
@@ -136,6 +152,7 @@ const determineRecommendation = (topic, answers) => {
             addOnKeys = addOnKeys.slice(0, 1);
          }
          break;
+
       case 'stress-calm':
          baseProductKey = 'WELLNESS_TRIO';
 
@@ -171,6 +188,7 @@ const determineRecommendation = (topic, answers) => {
          if (checkAns('improve other areas', 'Focus'))
             addOnKeys.push('GOOD_BRAIN');
          break;
+
       case 'focus-clarity':
          baseProductKey = 'GOOD_BRAIN';
 
@@ -191,11 +209,11 @@ const determineRecommendation = (topic, answers) => {
             addOnKeys.push('GOOD_BRAIN');
          if (checkAns('improve most', 'Memory')) addOnKeys.push('GOOD_BRAIN');
          break;
+
       case 'immunity-support':
          baseProductKey = 'WELLNESS_TRIO';
 
          if (checkAns('catch colds', 'Often')) addOnKeys.push('IMMUNITY');
-
          if (checkAns('catch colds', 'Occasionally'))
             addOnKeys.push('SEA_MOSS');
 
@@ -217,27 +235,21 @@ const determineRecommendation = (topic, answers) => {
          if (checkAns('stress', 'Sometimes')) addOnKeys.push('GOOD_BRAIN');
 
          if (checkAns('support', 'Fast immune')) addOnKeys.push('IMMUNITY');
-
          if (checkAns('support', 'Preventive')) addOnKeys.push('SEA_MOSS');
-
          if (checkAns('support', 'Recovery')) addOnKeys.push('SHILAJIT');
-
          break;
 
       case 'libido-balance':
          baseProductKey = 'LIBIDO_KIT';
 
          if (checkAns('current concern', 'Hormonal')) addOnKeys.push('FIBROID');
-
          if (checkAns('current concern', 'Low stamina'))
             addOnKeys.push('SHILAJIT');
-
          if (checkAns('current concern', 'Low desire'))
             addOnKeys.push('PURE_LIBIDO');
 
          if (checkAns('tired or drained', 'Every day'))
             addOnKeys.push('WELLNESS_TRIO');
-
          if (checkAns('tired or drained', 'Several times'))
             addOnKeys.push('SHILAJIT');
 
@@ -248,15 +260,14 @@ const determineRecommendation = (topic, answers) => {
             addOnKeys.push('WELLNESS_TRIO');
 
          if (checkAns('goal', 'Boost libido')) addOnKeys.push('PURE_LIBIDO');
-
          if (checkAns('goal', 'hormonal balance')) addOnKeys.push('FIBROID');
-
          if (checkAns('goal', 'All of the above')) {
             addOnKeys.push('PURE_LIBIDO');
             addOnKeys.push('FIBROID');
             addOnKeys.push('PROSTATE');
          }
          break;
+
       case 'digestion-gut-health':
          baseProductKey = '4_STEP';
 
@@ -282,12 +293,15 @@ const determineRecommendation = (topic, answers) => {
             addOnKeys.push('FLAT_BELLY');
          }
          break;
+
       default:
          baseProductKey = '4_STEP';
    }
 
+   // 1. Remove duplicate keys first
    addOnKeys = [...new Set(addOnKeys)];
 
+   // 2. Remove the base key if it appears in addons list (to prevent duplicate items in cart)
    addOnKeys = addOnKeys.filter((k) => k !== baseProductKey);
 
    return { base: baseProductKey, addons: addOnKeys };
@@ -393,7 +407,7 @@ const Suggestions = () => {
                   rating: 5,
                   reviews: 8230,
                   img: base.img,
-                  Link: base.link,
+                  checkoutUrl: `https://liquidblenz.com/cart/${base.variantId}:1`,
                });
                setIsLoading(false);
                return;
@@ -403,13 +417,26 @@ const Suggestions = () => {
 
             const baseObj = productDetails[base];
             let combinedName = baseObj.name;
+            let variants = [baseObj.variantId];
 
-            if (addons.length > 0) {
-               const addonNames = addons
-                  .map((key) => productDetails[key].name)
+            // 3. Double Check: Filter out add-ons that share the same Variant ID as the base product
+            // This handles cases where different Keys point to the same Product ID
+            const uniqueAddons = addons.filter(
+               (key) => productDetails[key].variantId !== baseObj.variantId
+            );
+
+            if (uniqueAddons.length > 0) {
+               const addonNames = uniqueAddons
+                  .map((key) => {
+                     variants.push(productDetails[key].variantId);
+                     return productDetails[key].name;
+                  })
                   .join(' AND ');
                combinedName = `${baseObj.name} AND ${addonNames}`;
             }
+
+            const cartString = variants.map((id) => `${id}:1`).join(',');
+            const checkoutUrl = `https://liquidblenz.com/cart/${cartString}`;
 
             setFinalCard({
                name: combinedName,
@@ -418,7 +445,7 @@ const Suggestions = () => {
                rating: 5,
                reviews: 8230,
                img: baseObj.img,
-               Link: baseObj.link,
+               checkoutUrl: checkoutUrl,
             });
          } catch (error) {
             console.error('Error processing quiz results:', error);
@@ -429,7 +456,7 @@ const Suggestions = () => {
                rating: 5,
                reviews: 8230,
                img: fallback.img,
-               Link: fallback.link,
+               checkoutUrl: `https://liquidblenz.com/cart/${fallback.variantId}:1`,
             });
          }
          setIsLoading(false);
@@ -510,16 +537,14 @@ const Suggestions = () => {
                               ({finalCard.reviews})
                            </span>
                         </div>
-                        <Link
-                           to={finalCard.Link}
-                           target='_blank'
-                           rel='noopener noreferrer'
-                           style={{ width: '100%' }}
+                        <a
+                           href={finalCard.checkoutUrl}
+                           style={{ width: '100%', textDecoration: 'none' }}
                         >
                            <button className='suggestion-card-btn'>
-                              View Product
+                              Buy My Personalized Plan
                            </button>
-                        </Link>
+                        </a>
                      </div>
                   </motion.div>
                </div>
