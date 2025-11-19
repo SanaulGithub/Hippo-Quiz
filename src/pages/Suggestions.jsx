@@ -11,9 +11,9 @@ import ProductFour from '../assets/productfour.webp';
 
 const productDetails = {
    '4_STEP': {
-      name: 'Liquid Blenz 4-Step Detox & Cleanse Bundle',
+      name: 'Liquid Blenz Flat Belly Bully – Daily Herbal Cleanse Tonic',
       img: ProductOne,
-      variantId: '47561910517982',
+      variantId: '45228119392478',
       link: 'https://liquidblenz.com/products/liquid-blenz-4-step-detox-cleanse-bundle',
    },
    FLAT_BELLY: {
