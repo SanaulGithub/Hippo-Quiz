@@ -249,7 +249,6 @@ const quizzes = {
          form: true,
       },
    ],
-
    'stress-calm': [
       {
          key: 'stress_level',
@@ -568,6 +567,7 @@ const quizzes = {
          ],
       },
       {
+         key: 'immunity_info_1',
          percent: 36,
          title: 'Immunity Support',
          subtitle:
@@ -623,6 +623,7 @@ const quizzes = {
          ],
       },
       {
+         key: 'immunity_info_2',
          percent: 73,
          title: 'Immunity Support',
          subtitle:
@@ -649,6 +650,7 @@ const quizzes = {
          ],
       },
       {
+         key: 'contact_info',
          percent: 100,
          title: 'Please provide your information',
          form: true,
@@ -918,13 +920,33 @@ const Quiz = () => {
       try {
          return savedAnswers ? JSON.parse(savedAnswers) : {};
       } catch (e) {
-         console.error('Failed to parse quiz answers:', e);
-         return {};
+         return e;
       }
    });
 
    const [isLoading, setIsLoading] = useState(false);
    const navigate = useNavigate();
+
+   useEffect(() => {
+      const savedAnswers = localStorage.getItem(`quizAnswers_${topic}`);
+      if (savedAnswers) {
+         try {
+            setAnswers((prev) => ({ ...prev, ...JSON.parse(savedAnswers) }));
+         } catch (e) {
+            console.error(e);
+         }
+      } else {
+         setAnswers({});
+      }
+
+      const savedStep = localStorage.getItem(`quizStep_${topic}`);
+      if (savedStep) {
+         const pStep = parseInt(savedStep, 10);
+         if (!isNaN(pStep)) setStep(pStep);
+      } else {
+         setStep(0);
+      }
+   }, [topic]);
 
    useEffect(() => {
       localStorage.setItem(`quizStep_${topic}`, step);
@@ -939,11 +961,11 @@ const Quiz = () => {
    }, [answers, topic]);
 
    useEffect(() => {
-      const currentKey = quizSteps[step]?.key;
-      if (currentKey && answers[currentKey]) {
-         const answerValue = answers[currentKey];
+      const currentQuestion = quizSteps[step]?.question;
+      if (currentQuestion && answers[currentQuestion]) {
+         const savedLabel = answers[currentQuestion];
          const index = quizSteps[step].options?.findIndex(
-            (opt) => opt.value === answerValue
+            (opt) => opt.label === savedLabel
          );
          if (index > -1) {
             setSelected(index);
@@ -967,7 +989,7 @@ const Quiz = () => {
                <p style={{ color: 'red', fontSize: 20 }}>
                   Sorry, there was a problem loading this quiz step.
                   <br />
-                  Please try refreshing the page or contact support.
+                  Please try refreshing the page.
                </p>
             </div>
          </div>
@@ -976,14 +998,17 @@ const Quiz = () => {
 
    const handleOption = (idx) => {
       setSelected(idx);
+      const questionText = current.question;
+      const answerLabel = current.options[idx].label;
 
-      const currentKey = current.key;
-      const answerValue = current.options[idx].value;
-      if (currentKey) {
-         setAnswers((prevAnswers) => ({
-            ...prevAnswers,
-            [currentKey]: answerValue,
-         }));
+      if (questionText) {
+         setAnswers((prevAnswers) => {
+            const newAnswers = {
+               ...prevAnswers,
+               [questionText]: answerLabel,
+            };
+            return newAnswers;
+         });
       }
    };
 
@@ -1016,9 +1041,7 @@ const Quiz = () => {
          `quizAnswers_${topic}`,
          JSON.stringify(finalAnswers)
       );
-
       localStorage.setItem('lastCompletedQuizTopic', topic);
-      // ---------------------
 
       setTimeout(() => {
          localStorage.removeItem(`quizStep_${topic}`);
@@ -1042,8 +1065,6 @@ const Quiz = () => {
                height={80}
                width={80}
                color='#189f1d'
-               wrapperStyle={{}}
-               wrapperClass=''
                visible={true}
                ariaLabel='oval-loading'
                secondaryColor='#189f1d'

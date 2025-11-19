@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
@@ -9,584 +8,289 @@ import ProductTwo from '../assets/producttwo.svg';
 import ProductThree from '../assets/productthree.webp';
 import ProductFour from '../assets/productfour.webp';
 
-const allProducts = [
-   {
-      name: 'Liquid Blenz 4-Step Detox & Cleanse Bundle – Flat Belly Bully, Sea Moss Tonic, Soursop Bitters & Immunity Enhancer',
-      description:
-         'Complete 4-step detox system for deep cleanse, digestion support and immunity.',
-      rating: 5,
-      reviews: 8230,
+const productDetails = {
+   '4_STEP': {
+      name: 'Liquid Blenz 4-Step Detox & Cleanse Bundle',
       img: ProductOne,
-      Link: 'https://liquidblenz.com/products/liquid-blenz-4-step-detox-cleanse-bundle',
-      tags: ['weight-loss', 'detox', 'bundle', 'digestion', 'immunity'],
+      link: 'https://liquidblenz.com/products/liquid-blenz-4-step-detox-cleanse-bundle',
    },
-   {
-      name: 'Liquid Blenz Flat Belly Bully – Daily Herbal Cleanse Tonic',
-      description:
-         'Daily herbal cleanse to support belly fat reduction, digestion & cravings control.',
-      rating: 5,
-      reviews: 8230,
+   FLAT_BELLY: {
+      name: 'Liquid Blenz Flat Belly Bully',
       img: ProductTwo,
-      Link: 'https://liquidblenz.com/products/pure-flat-belly-bully',
-      tags: ['weight-loss', 'digestion', 'belly', 'cravings'],
+      link: 'https://liquidblenz.com/products/pure-flat-belly-bully',
    },
-   {
-      name: 'Pure Soursop Bitters with Moringa & Turmeric - Immune Antioxidant Supplement',
-      description:
-         'Antioxidant bitters to support immunity, digestion and restful sleep.',
-      rating: 5,
-      reviews: 8230,
+   SOURSOP: {
+      name: 'Pure Soursop Bitters',
       img: ProductThree,
-      Link: 'https://liquidblenz.com/products/pure-soursop-bitters',
-      tags: ['immunity', 'digestion', 'sleep', 'calm'],
+      link: 'https://liquidblenz.com/products/pure-soursop-bitters',
    },
-   {
-      name: 'Pure Black Seed Bitters with Moringa & Tumeric - Metabolism Support',
-      description: 'Supports metabolism and healthy weight management.',
-      rating: 5,
-      reviews: 8230,
+   BLACK_SEED: {
+      name: 'Pure Black Seed Bitters',
       img: ProductFour,
-      Link: 'https://liquidblenz.com/products/pure-black-seed-bitters',
-      tags: ['weight-loss', 'metabolism', 'detox'],
+      link: 'https://liquidblenz.com/products/pure-black-seed-bitters',
    },
-   {
-      name: 'Liquid Blenz Sea Moss Natural Superfood Tonic',
-      description:
-         'Mineral-rich sea moss for energy, metabolism and preventive wellness.',
-      rating: 5,
-      reviews: 8230,
+   SEA_MOSS: {
+      name: 'Liquid Blenz Sea Moss Tonic',
       img: ProductFour,
-      Link: 'https://liquidblenz.com/products/liquid-blenz-sea-moss',
-      tags: ['immunity', 'energy', 'superfood', 'weight-loss', 'minerals'],
+      link: 'https://liquidblenz.com/products/liquid-blenz-sea-moss',
    },
-   {
-      name: 'Liquid Blenz Pure Immunity Enhancer – Elderberry Wellness Tonic',
-      description:
-         'Elderberry tonic for fast immune boosting and seasonal defense.',
-      rating: 5,
-      reviews: 8230,
+   GOOD_BRAIN: {
+      name: 'Good Brain Tonic',
+      img: ProductOne,
+      link: 'https://liquidblenz.com/products/good-brain-tonic',
+   },
+   IMMUNITY: {
+      name: 'Pure Immunity Enhancer',
       img: ProductTwo,
-      Link: 'https://liquidblenz.com/products/pure-immunity-enhancer-elderberry',
-      tags: ['immunity', 'fast-boost', 'preventive'],
+      link: 'https://liquidblenz.com/products/pure-immunity-enhancer-elderberry',
    },
-   {
-      name: 'Natural Elixir Pack',
-      description:
-         'Pack combining Elderberry + Sea Moss + Soursop for immune + energy support.',
-      rating: 5,
-      reviews: 8230,
+   SHILAJIT: {
+      name: 'Pure Shilajit Tonic',
       img: ProductOne,
-      Link: 'https://liquidblenz.com/products/natural-elixir-pack',
-      tags: ['immunity', 'bundle', 'energy', 'detox'],
+      link: 'https://liquidblenz.com/products/pure-shilajit-tonic',
    },
-   {
-      name: 'Health Builder Pack',
-      description:
-         'Support pack (Black Seed + Soursop + Elderberry) for stress, immunity & recovery.',
-      rating: 5,
-      reviews: 8230,
-      img: ProductThree,
-      Link: 'https://liquidblenz.com/products/health-builder-pack',
-      tags: ['immunity', 'stress', 'bundle', 'recovery'],
-   },
-   {
-      name: 'Healthy Power Pack',
-      description: 'Daily power pack for overall wellness and energy.',
-      rating: 5,
-      reviews: 8230,
+   WELLNESS_TRIO: {
+      name: 'Daily Wellness Trio',
       img: ProductOne,
-      Link: 'https://liquidblenz.com/products/healthy-power-pack',
-      tags: ['bundle', 'energy', 'wellness'],
+      link: 'https://liquidblenz.com/products/healthy-power-pack',
    },
-   {
-      name: 'Fuel Pack',
-      description: 'Energy + stamina pack to support active lifestyles.',
-      rating: 5,
-      reviews: 8230,
+   LIBIDO_KIT: {
+      name: 'Energy & Libido Boost Kit',
       img: ProductOne,
-      Link: 'https://liquidblenz.com/products/fuel-pack',
-      tags: ['bundle', 'energy', 'stamina'],
+      link: 'https://liquidblenz.com/products/pure-libido',
    },
-   {
-      name: 'Wellness Pack',
-      description:
-         'Balanced wellness pack for daily immune & hormonal support.',
-      rating: 5,
-      reviews: 8230,
+   PURE_LIBIDO: {
+      name: 'Pure Libido',
       img: ProductOne,
-      Link: 'https://liquidblenz.com/products/wellness-pack',
-      tags: ['bundle', 'wellness', 'preventive'],
+      link: 'https://liquidblenz.com/products/pure-libido',
    },
-   {
-      name: 'Pure Shilajit Tonic - Energy & Vitality Support',
-      description:
-         'Traditional shilajit tonic for energy, stamina and recovery.',
-      rating: 5,
-      reviews: 8230,
+   FIBROID: {
+      name: 'Fibroid Bully',
       img: ProductOne,
-      Link: 'https://liquidblenz.com/products/pure-shilajit-tonic',
-      tags: ['energy', 'stamina', 'recovery'],
+      link: 'https://liquidblenz.com/products/fibroid-bully',
    },
-   {
-      name: 'Good Brain Tonic - Brain Health Support',
-      description:
-         'Supports focus, clarity, mood balance and stress resilience.',
-      rating: 5,
-      reviews: 8230,
+   MENOPAUSE: {
+      name: 'Menopause Bully',
       img: ProductOne,
-      Link: 'https://liquidblenz.com/products/good-brain-tonic',
-      tags: ['focus', 'stress', 'clarity', 'calm'],
+      link: 'https://liquidblenz.com/products/menopause-bully',
    },
-   {
-      name: 'Liquid Blenz Blood Pressure Bully – Herbal Wellness Tonic with Hawthorn & Hibiscus',
-      description:
-         'Cardio support tonic to help maintain healthy blood pressure.',
-      rating: 5,
-      reviews: 8230,
+   PROSTATE: {
+      name: 'Prostate Bully',
       img: ProductOne,
-      Link: 'https://liquidblenz.com/products/blood-pressure-bully',
-      tags: ['cardio', 'blood-pressure', 'heart'],
+      link: 'https://liquidblenz.com/products/prostate-bully',
    },
-   {
-      name: 'Prostate Bully - Male Vitality Herbal Support Wellness Tonic',
-      description: 'Support for male urinary & prostate health and vitality.',
-      rating: 5,
-      reviews: 8230,
+   PERFORMANCE: {
+      name: 'Daily Performance Bundle',
       img: ProductOne,
-      Link: 'https://liquidblenz.com/products/prostate-bully',
-      tags: ['male', 'prostate', 'vitality'],
+      link: 'https://liquidblenz.com/products/build-your-box',
    },
-   {
-      name: 'Fibroid Bully – Hormone Balance & Uterine Support Tonic',
-      description:
-         'Herbal formula supporting female hormone balance and uterine health.',
-      rating: 5,
-      reviews: 8230,
-      img: ProductOne,
-      Link: 'https://liquidblenz.com/products/fibroid-bully',
-      tags: ['hormone', 'fibroid', 'female-health'],
-   },
-   {
-      name: 'Liquid Blenz Menopause Bully Natural Herbal Support for Women',
-      description: 'Support for menopause symptoms, mood & hormonal balance.',
-      rating: 5,
-      reviews: 8230,
-      img: ProductOne,
-      Link: 'https://liquidblenz.com/products/menopause-bully',
-      tags: ['hormone', 'menopause', 'female-health'],
-   },
-   {
-      name: 'Liquid Blenz Pure Libido – Daily Herbal Wellness Drink for Him & Her',
-      description:
-         'Daily tonic to support libido, balance and intimate wellness.',
-      rating: 5,
-      reviews: 8230,
-      img: ProductOne,
-      Link: 'https://liquidblenz.com/products/pure-libido',
-      tags: ['libido', 'balance', 'sexual-health'],
-   },
-   {
-      name: 'Liquid Blenz Stamina Herbal Supplement for Men & Women, 24oz',
-      description:
-         'Large-format stamina tonic for sustained energy and performance.',
-      rating: 5,
-      reviews: 8230,
-      img: ProductOne,
-      Link: 'https://liquidblenz.com/products/stamina-herbal-supplement-24oz',
-      tags: ['stamina', 'energy', 'performance'],
-   },
-   {
-      name: 'Stamina Fix Herbal Energy Drink 12oz',
-      description: 'Ready-to-drink energy tonic for an on-the-go boost.',
-      rating: 5,
-      reviews: 8230,
-      img: ProductOne,
-      Link: 'https://liquidblenz.com/products/stamina-fix-herbal-energy-drink-12oz',
-      tags: ['drink', 'energy', 'stamina'],
-   },
-   {
-      name: 'Herbal Fuel Wildberry Drink 12oz',
-      description: 'Herbal-flavored drink made with natural medicinal herbs.',
-      rating: 5,
-      reviews: 8230,
-      img: ProductOne,
-      Link: 'https://liquidblenz.com/products/herbal-fuel-wildberry-drink-12oz',
-      tags: ['drink', 'energy', 'flavor'],
-   },
-   {
-      name: 'Herbal Fuel Cranberry Ginger Drink 12oz',
-      description:
-         'Cranberry & ginger herbal drink for refreshment and light energy.',
-      rating: 5,
-      reviews: 8230,
-      img: ProductOne,
-      Link: 'https://liquidblenz.com/products/herbal-fuel-cranberry-ginger-12oz',
-      tags: ['drink', 'energy', 'flavor'],
-   },
-   {
-      name: 'Pure Diabetes Bully – Blood Sugar Support Tonic',
-      description:
-         'Herbal support to help maintain healthy blood sugar levels.',
-      rating: 5,
-      reviews: 8230,
-      img: ProductOne,
-      Link: 'https://liquidblenz.com/products/pure-diabetes-bully',
-      tags: ['blood-sugar', 'diabetes', 'metabolic'],
-   },
-   {
-      name: 'PICK 1 Free 8oz with $75+ Order',
-      description: 'Promotional free 8oz pick for qualifying orders.',
-      rating: 5,
-      reviews: 8230,
-      img: ProductOne,
-      Link: 'https://liquidblenz.com/products/pick-1-free-8oz',
-      tags: ['promo', 'sample'],
-   },
-   {
-      name: 'Build your Box',
-      description: 'Custom bundle builder (allow customers to pick items).',
-      rating: 5,
-      reviews: 8230,
-      img: ProductOne,
-      Link: 'https://liquidblenz.com/products/build-your-box',
-      tags: ['bundle', 'custom'],
-   },
-];
-
-const mapKeysToProducts = (keys, allProducts) => {
-   if (!keys || keys.length === 0) {
-      return allProducts.length > 0 ? [allProducts[0]] : [];
-   }
-
-   const keyMap = {
-      '4_step_bundle':
-         'Liquid Blenz 4-Step Detox & Cleanse Bundle – Flat Belly Bully, Sea Moss Tonic, Soursop Bitters & Immunity Enhancer',
-      flat_belly_bully:
-         'Liquid Blenz Flat Belly Bully – Daily Herbal Cleanse Tonic',
-      soursop_bitters:
-         'Pure Soursop Bitters with Moringa & Turmeric - Immune Antioxidant Supplement',
-      black_seed_bitters:
-         'Pure Black Seed Bitters with Moringa & Tumeric - Metabolism Support',
-      sea_moss: 'Liquid Blenz Sea Moss Natural Superfood Tonic',
-      elderberry:
-         'Liquid Blenz Pure Immunity Enhancer – Elderberry Wellness Tonic',
-      natural_elixir_pack: 'Natural Elixir Pack',
-      health_builder_pack: 'Health Builder Pack',
-      good_brain: 'Good Brain Tonic - Brain Health Support',
-      full_reset_pack: [
-         'Good Brain Tonic - Brain Health Support',
-         'Liquid Blenz Sea Moss Natural Superfood Tonic',
-         'Pure Soursop Bitters with Moringa & Turmeric - Immune Antioxidant Supplement',
-      ],
-      good_brain_seamoss: [
-         'Good Brain Tonic - Brain Health Support',
-         'Liquid Blenz Sea Moss Natural Superfood Tonic',
-      ],
-
-      stamina_tonic:
-         'Liquid Blenz Stamina Herbal Supplement for Men & Women, 24oz',
-      libido_tonic:
-         'Liquid Blenz Pure Libido – Daily Herbal Wellness Drink for Him & Her',
-      hormone_support:
-         'Fibroid Bully – Hormone Balance & Uterine Support Tonic',
-      menopause_support:
-         'Liquid Blenz Menopause Bully Natural Herbal Support for Women',
-   };
-
-   const foundProducts = [];
-   const productNames = new Set();
-
-   keys.forEach((key) => {
-      const mappedValue = keyMap[key];
-      if (Array.isArray(mappedValue)) {
-         mappedValue.forEach((name) => {
-            if (!productNames.has(name)) {
-               const product = allProducts.find((p) => p.name === name);
-               if (product) {
-                  foundProducts.push(product);
-                  productNames.add(name);
-               }
-            }
-         });
-      } else if (mappedValue) {
-         if (!productNames.has(mappedValue)) {
-            const product = allProducts.find((p) => p.name === mappedValue);
-            if (product) {
-               foundProducts.push(product);
-               productNames.add(mappedValue);
-            }
-         }
-      } else {
-         // Fallback: try to find product by partial name match with key
-         const product = allProducts.find((p) =>
-            p.name.toLowerCase().includes(key.replace(/_/g, ' '))
-         );
-         if (product && !productNames.has(product.name)) {
-            foundProducts.push(product);
-            productNames.add(product.name);
-         }
-      }
-   });
-
-   return foundProducts.length > 0
-      ? foundProducts
-      : allProducts.length > 0
-      ? [allProducts[0]]
-      : [];
 };
 
-const getRecommendations = (topic, answers) => {
+const determineRecommendation = (topic, answers) => {
+   let baseProductKey = '';
+   let addOnKeys = [];
+
+   const checkAns = (questionPart, answerPart) => {
+      if (!answers) return false;
+      const fullQuestionKey = Object.keys(answers).find((k) =>
+         k.toLowerCase().includes(questionPart.toLowerCase())
+      );
+      if (!fullQuestionKey) return false;
+      const userAnswer = answers[fullQuestionKey];
+      if (!userAnswer) return false;
+      return String(userAnswer)
+         .toLowerCase()
+         .includes(answerPart.toLowerCase());
+   };
+
    switch (topic) {
-      case 'stress-calm': {
-         let recommendations = [];
-         // Logic based on 'stress_level'
-         if (
-            answers.stress_level === 'high' ||
-            answers.stress_level === 'medium'
-         ) {
-            recommendations = ['full_reset_pack'];
-         } else if (
-            answers.stress_level === 'low' ||
-            answers.stress_level === 'calm'
-         ) {
-            recommendations = ['good_brain'];
-         } else {
-            // Default for stress-calm
-            recommendations = ['full_reset_pack'];
-         }
+      case 'weight-loss':
+         baseProductKey = '4_STEP';
 
-         const addOnTriggers = [
-            answers.stress_symptom === 'eating',
-            answers.stress_coping === 'eating',
-            answers.secondary_goal === 'digestion',
-         ];
-         if (addOnTriggers.some(Boolean)) {
-            recommendations.push('flat_belly_bully');
-         }
-         return [...new Set(recommendations)];
-      }
+         if (checkAns('weight loss goals', 'significant'))
+            addOnKeys.push('SOURSOP');
+         if (checkAns('weight loss goals', 'Improve overall'))
+            addOnKeys.push('BLACK_SEED');
 
-      case 'focus-clarity': {
-         const scores = { brain: 0, brain_sea: 0, reset: 0 };
-         // Logic updated to use Q1, Q2, etc.
-         const logic = {
-            Q1: {
-               // focus_frequency
-               Constantly: 'reset',
-               Frequently: 'reset',
-               Occasionally: 'brain',
-               Rarely: 'brain',
-            },
-            Q2: {
-               // focus_time
-               Morning: 'brain_sea',
-               'Afternoon crash': 'brain_sea',
-               Evenings: 'brain',
-               'All day': 'reset',
-            },
-            Q3: {
-               // energy_level
-               'Consistently tired': 'brain_sea',
-               'Highs and lows': 'reset',
-               Stable: 'brain',
-               'Energetic all day': 'brain',
-            },
-            Q4: {
-               // caffeine_intake
-               'Yes, multiple times daily': 'reset',
-               'Once a day': 'brain_sea',
-               Rarely: 'brain',
-               Never: 'brain',
-            },
-            Q5: {
-               // fatigue_management
-               'Coffee / energy drinks': 'reset',
-               'Power naps': 'brain_sea',
-               Exercise: 'brain',
-               Supplements: 'brain',
-               "I don't": 'reset',
-            },
-            Q6: {
-               // primary_goal
-               'Productivity at work': 'reset',
-               'Mental clarity': 'brain',
-               'Motivation & energy': 'brain_sea',
-               'Memory & concentration': 'brain',
-            },
-         };
+         if (checkAns('biggest challenge', 'Slow metabolism'))
+            addOnKeys.push('BLACK_SEED');
+         if (checkAns('biggest challenge', 'Poor digestion'))
+            addOnKeys.push('SOURSOP');
+         if (checkAns('biggest challenge', 'Stress'))
+            addOnKeys.push('GOOD_BRAIN');
+         if (checkAns('biggest challenge', 'Cravings'))
+            addOnKeys.push('GOOD_BRAIN');
+         if (checkAns('biggest challenge', 'Low energy'))
+            addOnKeys.push('SHILAJIT');
 
-         Object.keys(logic).forEach((key) => {
-            const answer = answers[key];
-            if (answer && logic[key][answer]) {
-               const bucket = logic[key][answer];
-               scores[bucket]++;
-            }
-         });
+         if (checkAns('secondary areas', 'Energy')) addOnKeys.push('SHILAJIT');
+         if (checkAns('secondary areas', 'Stress'))
+            addOnKeys.push('GOOD_BRAIN');
+         if (checkAns('secondary areas', 'Digestion'))
+            addOnKeys.push('SEA_MOSS');
+         if (checkAns('secondary areas', 'Focus')) addOnKeys.push('GOOD_BRAIN');
+         if (checkAns('secondary areas', 'Libido'))
+            addOnKeys.push('PURE_LIBIDO');
 
-         if (scores.reset >= scores.brain_sea && scores.reset >= scores.brain) {
-            return ['full_reset_pack'];
+         if (checkAns('combination approach', 'No')) {
+            addOnKeys = addOnKeys.slice(0, 1);
          }
-         if (
-            scores.brain_sea >= scores.reset &&
-            scores.brain_sea >= scores.brain
-         ) {
-            return ['good_brain_seamoss'];
-         }
-         return ['good_brain'];
-      }
+         break;
+      case 'stress-calm':
+         baseProductKey = 'WELLNESS_TRIO';
 
-      case 'immunity-support': {
-         // Logic based on support_type
-         if (answers.support_type === 'fast_boost') return ['elderberry'];
-         if (answers.support_type === 'preventive') return ['sea_moss'];
-         if (answers.support_type === 'recovery_energy')
-            return ['natural_elixir_pack'];
+         if (checkAns('stress levels', 'Constantly'))
+            addOnKeys.push('GOOD_BRAIN');
+         if (checkAns('stress levels', 'manageable'))
+            addOnKeys.push('GOOD_BRAIN');
 
-         const highNeedTriggers = [
-            answers.colds === 'often',
-            answers.energy === 'always_tired',
-            answers.diet === 'unbalanced',
-            answers.sleep === 'poor' || answers.sleep === 'varies', // Logic to match multiple poor sleep values
-            answers.active === 'rarely',
-            answers.stress === 'high',
-         ];
-         if (highNeedTriggers.some(Boolean)) {
-            return answers.stress === 'high'
-               ? ['health_builder_pack']
-               : ['natural_elixir_pack'];
-         }
+         if (checkAns('source of stress', 'Health')) addOnKeys.push('SOURSOP');
 
-         if (answers.colds === 'rarely') return ['sea_moss'];
-         // Default fallback
-         return ['elderberry', 'sea_moss'];
-      }
+         if (checkAns('stress usually show up', 'tension'))
+            addOnKeys.push('GOOD_BRAIN');
+         if (checkAns('stress usually show up', 'sleep'))
+            addOnKeys.push('GOOD_BRAIN');
+         if (checkAns('stress usually show up', 'focus'))
+            addOnKeys.push('GOOD_BRAIN');
+         if (checkAns('stress usually show up', 'eating'))
+            addOnKeys.push('FLAT_BELLY');
 
-      case 'libido-balance': {
-         let recommendations = [];
+         if (checkAns('sleep quality', 'Poor')) addOnKeys.push('GOOD_BRAIN');
+         if (checkAns('sleep quality', 'light sleep'))
+            addOnKeys.push('SEA_MOSS');
 
-         // Logic based on Q1 (current concern) and Q6 (goal)
-         if (
-            answers.Q1 === 'Low desire / libido' ||
-            answers.Q6 === 'Boost libido'
-         ) {
-            recommendations.push('libido_tonic');
-         }
-         if (
-            answers.Q1 === 'Low stamina or energy' ||
-            answers.Q3 === 'Every day'
-         ) {
-            recommendations.push('stamina_tonic');
-         }
-         if (
-            answers.Q1 === 'Hormonal imbalance' ||
-            answers.Q6 === 'Support hormonal balance'
-         ) {
-            recommendations.push('hormone_support');
-         }
-         if (answers.Q1 === 'Mood & confidence issues') {
-            recommendations.push('good_brain');
-         }
+         if (checkAns('feel stressed', 'Food')) addOnKeys.push('FLAT_BELLY');
 
-         if (recommendations.length === 0) {
-            recommendations = ['libido_tonic', 'stamina_tonic'];
-         }
+         if (checkAns('support do you prefer', 'Combination'))
+            addOnKeys.push('SOURSOP');
+         if (checkAns('support do you prefer', 'tonic'))
+            addOnKeys.push('GOOD_BRAIN');
 
-         return [...new Set(recommendations)];
-      }
+         if (checkAns('improve other areas', 'Digestion'))
+            addOnKeys.push('FLAT_BELLY');
+         if (checkAns('improve other areas', 'Focus'))
+            addOnKeys.push('GOOD_BRAIN');
+         break;
+      case 'focus-clarity':
+         baseProductKey = 'GOOD_BRAIN';
 
-      case 'digestion-gut-health': {
-         let recommendations = [];
+         if (checkAns('distracted', 'Constantly')) addOnKeys.push('GOOD_BRAIN');
+         if (checkAns('distracted', 'Frequently')) addOnKeys.push('GOOD_BRAIN');
 
-         if (
-            answers.Q1 === 'Daily' ||
-            answers.Q2 === 'All of the above' ||
-            answers.Q6 === 'Always uncomfortable'
-         ) {
-            recommendations = ['4_step_bundle'];
-         } else if (
-            answers.Q1 === 'A few times a week' ||
-            answers.Q2 === 'Irregular digestion' ||
-            answers.Q5 === 'Processed / convenience foods'
-         ) {
-            recommendations = ['flat_belly_bully', 'soursop_bitters'];
-         } else {
-            recommendations = ['soursop_bitters'];
-         }
+         if (checkAns('time of day', 'Afternoon crash'))
+            addOnKeys.push('SHILAJIT');
+         if (checkAns('time of day', 'All day')) addOnKeys.push('SHILAJIT');
 
-         if (answers.Q3 === 'Too high') {
-            recommendations.push('flat_belly_bully');
-         }
-         if (answers.Q5 === 'High protein') {
-            recommendations.push('black_seed_bitters');
-         }
+         if (checkAns('current energy', 'Consistently tired'))
+            addOnKeys.push('SHILAJIT');
+         if (checkAns('current energy', 'Highs and lows'))
+            addOnKeys.push('SHILAJIT');
 
-         return [...new Set(recommendations)];
-      }
+         if (checkAns('improve most', 'Motivation')) addOnKeys.push('SHILAJIT');
+         if (checkAns('improve most', 'Mental clarity'))
+            addOnKeys.push('GOOD_BRAIN');
+         if (checkAns('improve most', 'Memory')) addOnKeys.push('GOOD_BRAIN');
+         break;
+      case 'immunity-support':
+         baseProductKey = 'WELLNESS_TRIO';
 
-      case 'weight-loss': {
-         // Always main bundle
-         let primary = '';
-         let addons = [];
-         // -----------------------------
-         // Q1 — Weight Goal
-         // -----------------------------
-         if (answers.weight_goal === 'significant') {
-            addons.push('pure_soursop_bitters'); // Deep cleanse
+         if (checkAns('catch colds', 'Often')) addOnKeys.push('IMMUNITY');
+
+         if (checkAns('catch colds', 'Occasionally'))
+            addOnKeys.push('SEA_MOSS');
+
+         if (checkAns('daily energy', 'Always tired'))
+            addOnKeys.push('SHILAJIT');
+         if (checkAns('daily energy', 'Up and down'))
+            addOnKeys.push('SHILAJIT');
+
+         if (checkAns('diet', 'Unbalanced')) addOnKeys.push('SOURSOP');
+         if (checkAns('diet', 'Moderate')) addOnKeys.push('SOURSOP');
+
+         if (checkAns('sleep', 'Poor')) addOnKeys.push('SOURSOP');
+         if (checkAns('sleep', 'Varies')) addOnKeys.push('SOURSOP');
+
+         if (checkAns('active', 'Not very active')) addOnKeys.push('SHILAJIT');
+         if (checkAns('active', 'Rarely')) addOnKeys.push('SHILAJIT');
+
+         if (checkAns('stress', 'Yes')) addOnKeys.push('GOOD_BRAIN');
+         if (checkAns('stress', 'Sometimes')) addOnKeys.push('GOOD_BRAIN');
+
+         if (checkAns('support', 'Fast immune')) addOnKeys.push('IMMUNITY');
+
+         if (checkAns('support', 'Preventive')) addOnKeys.push('SEA_MOSS');
+
+         if (checkAns('support', 'Recovery')) addOnKeys.push('SHILAJIT');
+
+         break;
+
+      case 'libido-balance':
+         baseProductKey = 'LIBIDO_KIT';
+
+         if (checkAns('current concern', 'Hormonal')) addOnKeys.push('FIBROID');
+
+         if (checkAns('current concern', 'Low stamina'))
+            addOnKeys.push('SHILAJIT');
+
+         if (checkAns('current concern', 'Low desire'))
+            addOnKeys.push('PURE_LIBIDO');
+
+         if (checkAns('tired or drained', 'Every day'))
+            addOnKeys.push('WELLNESS_TRIO');
+
+         if (checkAns('tired or drained', 'Several times'))
+            addOnKeys.push('SHILAJIT');
+
+         if (checkAns('exercise', 'Never')) addOnKeys.push('PROSTATE');
+         if (checkAns('exercise', 'Rarely')) addOnKeys.push('PROSTATE');
+
+         if (checkAns('stress or anxiety', 'Yes'))
+            addOnKeys.push('WELLNESS_TRIO');
+
+         if (checkAns('goal', 'Boost libido')) addOnKeys.push('PURE_LIBIDO');
+
+         if (checkAns('goal', 'hormonal balance')) addOnKeys.push('FIBROID');
+
+         if (checkAns('goal', 'All of the above')) {
+            addOnKeys.push('PURE_LIBIDO');
+            addOnKeys.push('FIBROID');
+            addOnKeys.push('PROSTATE');
          }
-         if (answers.weight_goal === 'metabolism') {
-            addons.push('black_seed_bitters'); // For metabolism
+         break;
+      case 'digestion-gut-health':
+         baseProductKey = '4_STEP';
+
+         if (checkAns('symptom affects you', 'All of the above'))
+            addOnKeys.push('PERFORMANCE');
+
+         if (checkAns('appetite usually', 'Varies'))
+            addOnKeys.push('WELLNESS_TRIO');
+
+         if (checkAns('meals do you eat', '1-2'))
+            addOnKeys.push('WELLNESS_TRIO');
+         if (checkAns('meals do you eat', 'skip meals'))
+            addOnKeys.push('WELLNESS_TRIO');
+
+         if (checkAns('diet type', 'Processed')) addOnKeys.push('FLAT_BELLY');
+
+         if (checkAns('bowel movements', 'constipation'))
+            addOnKeys.push('FLAT_BELLY');
+         if (checkAns('bowel movements', 'uncomfortable'))
+            addOnKeys.push('FLAT_BELLY');
+
+         if (!addOnKeys.includes('FLAT_BELLY')) {
+            addOnKeys.push('FLAT_BELLY');
          }
-         // -----------------------------
-         // Q2 — Main Weight Loss Challenge
-         // -----------------------------
-         if (answers.challenge === 'metabolism') {
-            addons.push('black_seed_bitters');
-         }
-         if (answers.challenge === 'digestion') {
-            addons.push('pure_soursop_bitters');
-         }
-         if (answers.challenge === 'stress') {
-            addons.push('good_brain');
-         }
-         if (answers.challenge === 'cravings') {
-            addons.push('good_brain');
-         }
-         // -----------------------------
-         // Q3 — Secondary Goals
-         // -----------------------------
-         if (answers.secondary_goal === 'focus') {
-            addons.push('good_brain');
-         }
-         if (answers.secondary_goal === 'digestion') {
-            addons.push('sea_moss');
-         }
-         if (answers.secondary_goal === 'energy') {
-            addons.push('good_brain'); // OPTIONAL: Energy triggers Good Brain
-         }
-         // Remove duplicates
-         addons = [...new Set(addons)];
-         // -----------------------------
-         // FINAL DECISION LOGIC
-         // -----------------------------
-         // User chooses SIMPLE mode → primary + 1 addon only
-         if (answers.combination_preference === 'no') {
-            return ['soursop_bitters', addons[0]].filter(Boolean);
-         }
-         // User chooses COMBO → main bundle + addons
-         if (
-            answers.support_preference === 'combo' ||
-            answers.combination_preference === 'yes'
-         ) {
-            return [primary, ...addons];
-         }
-         // User chooses DETOX → only detox bundle
-         if (answers.support_preference === 'detox') {
-            return [primary];
-         }
-         // Default
-         return [primary, ...addons];
-      }
+         break;
+      default:
+         baseProductKey = '4_STEP';
    }
+
+   addOnKeys = [...new Set(addOnKeys)];
+
+   addOnKeys = addOnKeys.filter((k) => k !== baseProductKey);
+
+   return { base: baseProductKey, addons: addOnKeys };
 };
 
 const CloudSvg = ({ style }) => (
@@ -616,20 +320,14 @@ const CloudOverlay = () => {
          transition: { duration: 1.5, ease: 'easeOut' },
       },
    };
-
    const cloudVariants = {
       initial: { x: -20, y: 0 },
       animate: {
          x: [0, 20, 0],
          y: [0, 5, 0],
-         transition: {
-            duration: 4,
-            repeat: Infinity,
-            ease: 'easeInOut',
-         },
+         transition: { duration: 4, repeat: Infinity, ease: 'easeInOut' },
       },
    };
-
    return (
       <motion.div
          className='cloud-overlay'
@@ -678,62 +376,72 @@ const CloudOverlay = () => {
 
 const Suggestions = () => {
    const [isLoading, setIsLoading] = useState(true);
-   const [suggestedProducts, setSuggestedProducts] = useState([]);
+   const [finalCard, setFinalCard] = useState(null);
 
    useEffect(() => {
-      try {
-         const topic = localStorage.getItem('lastCompletedQuizTopic');
-         const answersJSON = localStorage.getItem(`quizAnswers_${topic}`);
-         const answers = answersJSON ? JSON.parse(answersJSON) : {};
-
-         if (!allProducts || allProducts.length === 0) {
-            console.error('`allProducts` array is empty or not defined.');
-            setIsLoading(false);
-            return;
-         }
-
-         if (!topic || Object.keys(answers).length === 0) {
-            setSuggestedProducts([allProducts[0]]);
-            setIsLoading(false);
-            return;
-         }
-
-         const recommendedKeys = getRecommendations(topic, answers);
-         const products = mapKeysToProducts(recommendedKeys, allProducts);
-
-         setSuggestedProducts(products.slice(0, 4));
-
-         // I have commented these out so you can test.
-         // Your localStorage will NOT be deleted.
-         // localStorage.removeItem('lastCompletedQuizTopic');
-         // localStorage.removeItem(`quizAnswers_${topic}`);
-      } catch (error) {
-         console.error('Error processing quiz results:', error);
-         if (allProducts && allProducts.length > 0) {
-            setSuggestedProducts([allProducts[0]]);
-         }
-      }
-
       const timer = setTimeout(() => {
+         try {
+            const topic = localStorage.getItem('lastCompletedQuizTopic');
+            const answersJSON = localStorage.getItem(`quizAnswers_${topic}`);
+            const answers = answersJSON ? JSON.parse(answersJSON) : {};
+
+            if (!topic || Object.keys(answers).length === 0) {
+               const base = productDetails['4_STEP'];
+               setFinalCard({
+                  name: base.name,
+                  description: 'Complete detox system for deep cleanse.',
+                  rating: 5,
+                  reviews: 8230,
+                  img: base.img,
+                  Link: base.link,
+               });
+               setIsLoading(false);
+               return;
+            }
+
+            const { base, addons } = determineRecommendation(topic, answers);
+
+            const baseObj = productDetails[base];
+            let combinedName = baseObj.name;
+
+            if (addons.length > 0) {
+               const addonNames = addons
+                  .map((key) => productDetails[key].name)
+                  .join(' AND ');
+               combinedName = `${baseObj.name} AND ${addonNames}`;
+            }
+
+            setFinalCard({
+               name: combinedName,
+               description:
+                  'Your personalized Liquid Blenz plan based on your quiz results.',
+               rating: 5,
+               reviews: 8230,
+               img: baseObj.img,
+               Link: baseObj.link,
+            });
+         } catch (error) {
+            console.error('Error processing quiz results:', error);
+            const fallback = productDetails['4_STEP'];
+            setFinalCard({
+               name: fallback.name,
+               description: 'Complete detox system for deep cleanse.',
+               rating: 5,
+               reviews: 8230,
+               img: fallback.img,
+               Link: fallback.link,
+            });
+         }
          setIsLoading(false);
       }, 2500);
+
       return () => clearTimeout(timer);
    }, []);
 
    const containerVariants = {
       hidden: { opacity: 0, y: 50 },
-      visible: {
-         opacity: 1,
-         y: 0,
-         transition: {
-            duration: 0.8,
-            delay: 0.5,
-            when: 'beforeChildren',
-            staggerChildren: 0.3,
-         },
-      },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.5 } },
    };
-
    const itemVariants = {
       hidden: { opacity: 0, y: 20 },
       visible: { opacity: 1, y: 0 },
@@ -745,7 +453,7 @@ const Suggestions = () => {
             {isLoading && <CloudOverlay key='cloud-loader' />}
          </AnimatePresence>
 
-         {!isLoading && suggestedProducts.length > 0 && (
+         {!isLoading && finalCard && (
             <motion.div
                className='suggestions-container'
                variants={containerVariants}
@@ -753,67 +461,67 @@ const Suggestions = () => {
                animate='visible'
             >
                <motion.h1 variants={itemVariants} className='suggestions-title'>
-                  Suggested Solutions
+                  Suggested Solution
                </motion.h1>
                <motion.div
                   variants={itemVariants}
                   className='suggestions-subtitle'
                >
-                  Here’s a plan designed for your needs.
+                  Here’s a custom plan designed for your needs.
                </motion.div>
 
                <div className='suggestions-list'>
-                  {suggestedProducts.map((product) => (
-                     <motion.div
-                        className='suggestion-card'
-                        key={product.name}
-                        variants={itemVariants}
-                     >
-                        <div className='suggestion-card-img-wrap'>
-                           <img
-                              src={product.img}
-                              alt={product.name}
-                              className='suggestion-card-img'
-                           />
-                           <span className='suggestion-card-fav'>
-                              <AiOutlineStar size={26} />
+                  <motion.div
+                     className='suggestion-card'
+                     variants={itemVariants}
+                  >
+                     <div className='suggestion-card-img-wrap'>
+                        <img
+                           src={finalCard.img}
+                           alt={finalCard.name}
+                           className='suggestion-card-img'
+                        />
+                        <span className='suggestion-card-fav'>
+                           <AiOutlineStar size={26} />
+                        </span>
+                     </div>
+                     <div className='suggestion-card-body'>
+                        <div
+                           className='suggestion-card-name'
+                           style={{ fontSize: '1.2rem', lineHeight: '1.4' }}
+                        >
+                           {finalCard.name}
+                        </div>
+                        <div className='suggestion-card-desc'>
+                           {finalCard.description}
+                        </div>
+                        <div className='suggestion-card-rating'>
+                           <span className='suggestion-card-stars'>
+                              {Array.from({ length: 5 }).map((_, i) => (
+                                 <AiFillStar
+                                    key={i}
+                                    className='star'
+                                    color='#222'
+                                    size={18}
+                                 />
+                              ))}
+                           </span>
+                           <span className='suggestion-card-reviews'>
+                              ({finalCard.reviews})
                            </span>
                         </div>
-                        <div className='suggestion-card-body'>
-                           <div className='suggestion-card-name'>
-                              {product.name}
-                           </div>
-                           <div className='suggestion-card-desc'>
-                              {product.description}
-                           </div>
-                           <div className='suggestion-card-rating'>
-                              <span className='suggestion-card-stars'>
-                                 {Array.from({ length: 5 }).map((_, i) => (
-                                    <AiFillStar
-                                       key={i}
-                                       className='star'
-                                       color='#222'
-                                       size={18}
-                                    />
-                                 ))}
-                              </span>
-                              <span className='suggestion-card-reviews'>
-                                 ({product.reviews})
-                              </span>
-                           </div>
-                           <Link
-                              to={product.Link}
-                              target='_blank'
-                              rel='noopener noreferrer'
-                              style={{ width: '100%' }}
-                           >
-                              <button className='suggestion-card-btn'>
-                                 View Product
-                              </button>
-                           </Link>
-                        </div>
-                     </motion.div>
-                  ))}
+                        <Link
+                           to={finalCard.Link}
+                           target='_blank'
+                           rel='noopener noreferrer'
+                           style={{ width: '100%' }}
+                        >
+                           <button className='suggestion-card-btn'>
+                              View Product
+                           </button>
+                        </Link>
+                     </div>
+                  </motion.div>
                </div>
             </motion.div>
          )}
