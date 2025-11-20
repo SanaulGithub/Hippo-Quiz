@@ -1135,6 +1135,7 @@ const Quiz = () => {
                         name='name'
                         value={form.name}
                         onChange={handleFormChange}
+                        required
                      />
                   </div>
                   <div className='quiz-form-group'>
@@ -1144,6 +1145,7 @@ const Quiz = () => {
                         name='email'
                         value={form.email}
                         onChange={handleFormChange}
+                        required
                      />
                   </div>
                   <div className='quiz-form-group'>
@@ -1153,6 +1155,7 @@ const Quiz = () => {
                         name='phone'
                         value={form.phone}
                         onChange={handleFormChange}
+                        required
                      />
                   </div>
                   <div className='quiz-form-group'>

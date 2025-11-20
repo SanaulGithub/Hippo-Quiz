@@ -4,10 +4,11 @@ import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import ProductOne from '../assets/product1.webp';
-import ProductTwo from '../assets/producttwo.svg';
-import ProductThree from '../assets/productthree.webp';
-import ProductFour from '../assets/productfour.webp';
+import ProductOne from '../assets/productOne.jpeg';
+import ProductTwo from '../assets/productTwo.jpeg';
+import ProductThree from '../assets/productThree.jpeg';
+import ProductFour from '../assets/prouctFour.jpeg';
+import ProductFive from '../assets/productFive.png';
 
 const productDetails = {
    '4_STEP': {
@@ -392,6 +393,16 @@ const Suggestions = () => {
    const [isLoading, setIsLoading] = useState(true);
    const [finalCard, setFinalCard] = useState(null);
 
+   // Helper: select an image based on how many products are being suggested.
+   // 1 -> ProductOne, 2 -> ProductTwo, 3 -> ProductThree, 4 -> ProductFour, 5+ -> ProductFive
+   const selectImageByCount = (count) => {
+      if (count >= 5) return ProductFive;
+      if (count === 4) return ProductFour;
+      if (count === 3) return ProductThree;
+      if (count === 2) return ProductTwo;
+      return ProductOne;
+   };
+
    useEffect(() => {
       const timer = setTimeout(() => {
          try {
@@ -401,12 +412,13 @@ const Suggestions = () => {
 
             if (!topic || Object.keys(answers).length === 0) {
                const base = productDetails['4_STEP'];
+               const img = selectImageByCount(1); // single product -> show image for count 1
                setFinalCard({
                   name: base.name,
                   description: 'Complete detox system for deep cleanse.',
                   rating: 5,
                   reviews: 8230,
-                  img: base.img,
+                  img: img,
                   checkoutUrl: `https://liquidblenz.com/cart/${base.variantId}:1`,
                });
                setIsLoading(false);
@@ -438,24 +450,28 @@ const Suggestions = () => {
             const cartString = variants.map((id) => `${id}:1`).join(',');
             const checkoutUrl = `https://liquidblenz.com/cart/${cartString}`;
 
+            // select image based on how many products were included
+            const imageForCount = selectImageByCount(variants.length);
+
             setFinalCard({
                name: combinedName,
                description:
                   'Your personalized Liquid Blenz plan based on your quiz results.',
                rating: 5,
                reviews: 8230,
-               img: baseObj.img,
+               img: imageForCount,
                checkoutUrl: checkoutUrl,
             });
          } catch (error) {
             console.error('Error processing quiz results:', error);
             const fallback = productDetails['4_STEP'];
+            const img = selectImageByCount(1);
             setFinalCard({
                name: fallback.name,
                description: 'Complete detox system for deep cleanse.',
                rating: 5,
                reviews: 8230,
-               img: fallback.img,
+               img: img,
                checkoutUrl: `https://liquidblenz.com/cart/${fallback.variantId}:1`,
             });
          }
