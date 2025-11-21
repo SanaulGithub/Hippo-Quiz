@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+
 import { motion, AnimatePresence } from 'framer-motion';
 
 import ProductOne from '../assets/productOne.jpeg';
@@ -10,12 +10,17 @@ import ProductThree from '../assets/productThree.jpeg';
 import ProductFour from '../assets/prouctFour.jpeg';
 import ProductFive from '../assets/productFive.png';
 
+import WeightLossImg from '../assets/weight-loss.webp';
+
+import FocusImg from '../assets/Focus-and-Clarity-Bundle.png';
+import FocusShilajitImg from '../assets/Focus-Clarity-Bundle-add-on-Pure-shilajit.png';
+
 const productDetails = {
    '4_STEP': {
-      name: 'Liquid Blenz Flat Belly Bully – Daily Herbal Cleanse Tonic',
-      img: ProductOne,
+      name: 'Liquid Blenz 4-Step Detox & Cleanse Bundle',
+      img: WeightLossImg,
       variantId: '45228119392478',
-      link: 'https://liquidblenz.com/products/liquid-blenz-4-step-detox-cleanse-bundle',
+      link: 'https://liquidblenz.com/products/liquid-blenz-4-step-detox-cleanse-bundle-flat-belly-bully-sea-moss-tonic-soursop-bitters-immunity-enhancer',
    },
    FLAT_BELLY: {
       name: 'Liquid Blenz Flat Belly Bully',
@@ -101,6 +106,19 @@ const productDetails = {
       variantId: '44429876429022',
       link: 'https://liquidblenz.com/products/healthy-power-pack',
    },
+
+   FOCUS_CLARITY: {
+      name: 'Focus & Clarity Bundle',
+      img: FocusImg,
+      link: 'https://liquidblenz.com/products/focus-clarity-bundle',
+   },
+
+   // Combined product (Focus bundle + Pure Shilajit add-on)
+   FOCUS_CLARITY_SHILAJIT: {
+      name: 'Focus & Clarity Bundle + Pure Shilajit Add-on',
+      img: FocusShilajitImg,
+      link: 'https://liquidblenz.com/products/focus-clarity-bundle-add-on-pure-shilajit',
+   },
 };
 
 const determineRecommendation = (topic, answers) => {
@@ -123,12 +141,10 @@ const determineRecommendation = (topic, answers) => {
    switch (topic) {
       case 'weight-loss':
          baseProductKey = '4_STEP';
-
          if (checkAns('weight loss goals', 'significant'))
             addOnKeys.push('SOURSOP');
          if (checkAns('weight loss goals', 'Improve overall'))
             addOnKeys.push('BLACK_SEED');
-
          if (checkAns('biggest challenge', 'metabolism'))
             addOnKeys.push('BLACK_SEED');
          if (checkAns('biggest challenge', 'digestion'))
@@ -139,7 +155,6 @@ const determineRecommendation = (topic, answers) => {
             addOnKeys.push('GOOD_BRAIN');
          if (checkAns('biggest challenge', 'Low energy'))
             addOnKeys.push('SHILAJIT');
-
          if (checkAns('secondary areas', 'Energy')) addOnKeys.push('SHILAJIT');
          if (checkAns('secondary areas', 'Stress'))
             addOnKeys.push('GOOD_BRAIN');
@@ -148,22 +163,17 @@ const determineRecommendation = (topic, answers) => {
          if (checkAns('secondary areas', 'Focus')) addOnKeys.push('GOOD_BRAIN');
          if (checkAns('secondary areas', 'Libido'))
             addOnKeys.push('PURE_LIBIDO');
-
-         if (checkAns('combination approach', 'No')) {
+         if (checkAns('combination approach', 'No'))
             addOnKeys = addOnKeys.slice(0, 1);
-         }
          break;
 
       case 'stress-calm':
          baseProductKey = 'WELLNESS_TRIO';
-
          if (checkAns('stress levels', 'Constantly'))
             addOnKeys.push('GOOD_BRAIN');
          if (checkAns('stress levels', 'manageable'))
             addOnKeys.push('GOOD_BRAIN');
-
          if (checkAns('source of stress', 'Health')) addOnKeys.push('SOURSOP');
-
          if (checkAns('stress usually show up', 'tension'))
             addOnKeys.push('GOOD_BRAIN');
          if (checkAns('stress usually show up', 'sleep'))
@@ -172,18 +182,14 @@ const determineRecommendation = (topic, answers) => {
             addOnKeys.push('GOOD_BRAIN');
          if (checkAns('stress usually show up', 'eating'))
             addOnKeys.push('FLAT_BELLY');
-
          if (checkAns('sleep quality', 'Poor')) addOnKeys.push('GOOD_BRAIN');
          if (checkAns('sleep quality', 'light sleep'))
             addOnKeys.push('SEA_MOSS');
-
          if (checkAns('feel stressed', 'Food')) addOnKeys.push('FLAT_BELLY');
-
          if (checkAns('support do you prefer', 'Combination'))
             addOnKeys.push('SOURSOP');
          if (checkAns('support do you prefer', 'tonic'))
             addOnKeys.push('GOOD_BRAIN');
-
          if (checkAns('improve other areas', 'Digestion'))
             addOnKeys.push('FLAT_BELLY');
          if (checkAns('improve other areas', 'Focus'))
@@ -191,20 +197,18 @@ const determineRecommendation = (topic, answers) => {
          break;
 
       case 'focus-clarity':
+         // keep backward compatibility for recommendation logic,
+         // but UI-level logic will enforce showing Focus bundle (and optional shilajit)
          baseProductKey = 'GOOD_BRAIN';
-
          if (checkAns('distracted', 'Constantly')) addOnKeys.push('GOOD_BRAIN');
          if (checkAns('distracted', 'Frequently')) addOnKeys.push('GOOD_BRAIN');
-
          if (checkAns('time of day', 'Afternoon crash'))
             addOnKeys.push('SHILAJIT');
          if (checkAns('time of day', 'All day')) addOnKeys.push('SHILAJIT');
-
          if (checkAns('current energy', 'Consistently tired'))
             addOnKeys.push('SHILAJIT');
          if (checkAns('current energy', 'Highs and lows'))
             addOnKeys.push('SHILAJIT');
-
          if (checkAns('improve most', 'Motivation')) addOnKeys.push('SHILAJIT');
          if (checkAns('improve most', 'Mental clarity'))
             addOnKeys.push('GOOD_BRAIN');
@@ -213,28 +217,21 @@ const determineRecommendation = (topic, answers) => {
 
       case 'immunity-support':
          baseProductKey = 'WELLNESS_TRIO';
-
          if (checkAns('catch colds', 'Often')) addOnKeys.push('IMMUNITY');
          if (checkAns('catch colds', 'Occasionally'))
             addOnKeys.push('SEA_MOSS');
-
          if (checkAns('daily energy', 'Always tired'))
             addOnKeys.push('SHILAJIT');
          if (checkAns('daily energy', 'Up and down'))
             addOnKeys.push('SHILAJIT');
-
          if (checkAns('diet', 'Unbalanced')) addOnKeys.push('SOURSOP');
          if (checkAns('diet', 'Moderate')) addOnKeys.push('SOURSOP');
-
          if (checkAns('sleep', 'Poor')) addOnKeys.push('SOURSOP');
          if (checkAns('sleep', 'Varies')) addOnKeys.push('SOURSOP');
-
          if (checkAns('active', 'Not very active')) addOnKeys.push('SHILAJIT');
          if (checkAns('active', 'Rarely')) addOnKeys.push('SHILAJIT');
-
          if (checkAns('stress', 'Yes')) addOnKeys.push('GOOD_BRAIN');
          if (checkAns('stress', 'Sometimes')) addOnKeys.push('GOOD_BRAIN');
-
          if (checkAns('support', 'Fast immune')) addOnKeys.push('IMMUNITY');
          if (checkAns('support', 'Preventive')) addOnKeys.push('SEA_MOSS');
          if (checkAns('support', 'Recovery')) addOnKeys.push('SHILAJIT');
@@ -242,24 +239,19 @@ const determineRecommendation = (topic, answers) => {
 
       case 'libido-balance':
          baseProductKey = 'LIBIDO_KIT';
-
          if (checkAns('current concern', 'Hormonal')) addOnKeys.push('FIBROID');
          if (checkAns('current concern', 'Low stamina'))
             addOnKeys.push('SHILAJIT');
          if (checkAns('current concern', 'Low desire'))
             addOnKeys.push('PURE_LIBIDO');
-
          if (checkAns('tired or drained', 'Every day'))
             addOnKeys.push('WELLNESS_TRIO');
          if (checkAns('tired or drained', 'Several times'))
             addOnKeys.push('SHILAJIT');
-
          if (checkAns('exercise', 'Never')) addOnKeys.push('PROSTATE');
          if (checkAns('exercise', 'Rarely')) addOnKeys.push('PROSTATE');
-
          if (checkAns('stress or anxiety', 'Yes'))
             addOnKeys.push('WELLNESS_TRIO');
-
          if (checkAns('goal', 'Boost libido')) addOnKeys.push('PURE_LIBIDO');
          if (checkAns('goal', 'hormonal balance')) addOnKeys.push('FIBROID');
          if (checkAns('goal', 'All of the above')) {
@@ -271,38 +263,27 @@ const determineRecommendation = (topic, answers) => {
 
       case 'digestion-gut-health':
          baseProductKey = '4_STEP';
-
          if (checkAns('symptom affects you', 'All of the above'))
             addOnKeys.push('PERFORMANCE');
-
          if (checkAns('appetite usually', 'Varies'))
             addOnKeys.push('WELLNESS_TRIO');
-
          if (checkAns('meals do you eat', '1-2'))
             addOnKeys.push('WELLNESS_TRIO');
          if (checkAns('meals do you eat', 'skip meals'))
             addOnKeys.push('WELLNESS_TRIO');
-
          if (checkAns('diet type', 'Processed')) addOnKeys.push('FLAT_BELLY');
-
          if (checkAns('bowel movements', 'constipation'))
             addOnKeys.push('FLAT_BELLY');
          if (checkAns('bowel movements', 'uncomfortable'))
             addOnKeys.push('FLAT_BELLY');
-
-         if (!addOnKeys.includes('FLAT_BELLY')) {
-            addOnKeys.push('FLAT_BELLY');
-         }
+         if (!addOnKeys.includes('FLAT_BELLY')) addOnKeys.push('FLAT_BELLY');
          break;
 
       default:
          baseProductKey = '4_STEP';
    }
 
-   // 1. Remove duplicate keys first
    addOnKeys = [...new Set(addOnKeys)];
-
-   // 2. Remove the base key if it appears in addons list (to prevent duplicate items in cart)
    addOnKeys = addOnKeys.filter((k) => k !== baseProductKey);
 
    return { base: baseProductKey, addons: addOnKeys };
@@ -393,8 +374,6 @@ const Suggestions = () => {
    const [isLoading, setIsLoading] = useState(true);
    const [finalCard, setFinalCard] = useState(null);
 
-   // Helper: select an image based on how many products are being suggested.
-   // 1 -> ProductOne, 2 -> ProductTwo, 3 -> ProductThree, 4 -> ProductFour, 5+ -> ProductFive
    const selectImageByCount = (count) => {
       if (count >= 5) return ProductFive;
       if (count === 4) return ProductFour;
@@ -406,20 +385,91 @@ const Suggestions = () => {
    useEffect(() => {
       const timer = setTimeout(() => {
          try {
-            const topic = localStorage.getItem('lastCompletedQuizTopic');
-            const answersJSON = localStorage.getItem(`quizAnswers_${topic}`);
+            const topic = localStorage.getItem('lastCompletedQuizTopic') || '';
+            const answersJSON = topic
+               ? localStorage.getItem(`quizAnswers_${topic}`)
+               : null;
             const answers = answersJSON ? JSON.parse(answersJSON) : {};
 
+            // ALWAYS show Focus & Clarity bundle when the quiz topic is 'stress-calm'
+            if (topic === 'stress-calm') {
+               const p = productDetails['FOCUS_CLARITY'];
+               setFinalCard({
+                  name: p.name,
+                  description:
+                     'Focus & Clarity Bundle tailored for stress and mental clarity.',
+                  rating: 5,
+                  reviews: 8230,
+                  img: p.img || selectImageByCount(1),
+                  checkoutUrl: p.link,
+               });
+               setIsLoading(false);
+               return;
+            }
+
+            if (topic === 'focus-clarity') {
+               const checkAnsLocal = (questionPart, answerPart) => {
+                  if (!answers) return false;
+                  const fullQuestionKey = Object.keys(answers).find((k) =>
+                     k.toLowerCase().includes(questionPart.toLowerCase())
+                  );
+                  if (!fullQuestionKey) return false;
+                  const userAnswer = answers[fullQuestionKey];
+                  if (!userAnswer) return false;
+                  return String(userAnswer)
+                     .toLowerCase()
+                     .includes(answerPart.toLowerCase());
+               };
+
+               const needsStamina =
+                  checkAnsLocal('stamina', 'yes') ||
+                  checkAnsLocal('stamina', 'need') ||
+                  checkAnsLocal('improve most', 'stamina') ||
+                  checkAnsLocal('current energy', 'low') ||
+                  checkAnsLocal('current energy', 'consistently tired') ||
+                  checkAnsLocal('current energy', 'always tired') ||
+                  checkAnsLocal('distracted', 'tired');
+
+               if (needsStamina) {
+                  const p = productDetails['FOCUS_CLARITY_SHILAJIT'];
+                  setFinalCard({
+                     name: p.name,
+                     description:
+                        'Focus & Clarity Bundle with Pure Shilajit add-on for stamina and sustained energy.',
+                     rating: 5,
+                     reviews: 8230,
+                     img: p.img || selectImageByCount(1),
+                     checkoutUrl: p.link,
+                  });
+                  setIsLoading(false);
+                  return;
+               }
+
+               // default focus-clarity card (no stamina need)
+               const p = productDetails['FOCUS_CLARITY'];
+               setFinalCard({
+                  name: p.name,
+                  description:
+                     'Focus & Clarity Bundle tailored for mental clarity and focus.',
+                  rating: 5,
+                  reviews: 8230,
+                  img: p.img || selectImageByCount(1),
+                  checkoutUrl: p.link,
+               });
+               setIsLoading(false);
+               return;
+            }
+
+            // If no topic or no answers, fallback to 4_STEP
             if (!topic || Object.keys(answers).length === 0) {
                const base = productDetails['4_STEP'];
-               const img = selectImageByCount(1); // single product -> show image for count 1
                setFinalCard({
                   name: base.name,
                   description: 'Complete detox system for deep cleanse.',
                   rating: 5,
                   reviews: 8230,
-                  img: img,
-                  checkoutUrl: `https://liquidblenz.com/cart/${base.variantId}:1`,
+                  img: base.img || selectImageByCount(1),
+                  checkoutUrl: base.link,
                });
                setIsLoading(false);
                return;
@@ -427,31 +477,42 @@ const Suggestions = () => {
 
             const { base, addons } = determineRecommendation(topic, answers);
 
-            const baseObj = productDetails[base];
-            let combinedName = baseObj.name;
-            let variants = [baseObj.variantId];
-
-            // 3. Double Check: Filter out add-ons that share the same Variant ID as the base product
-            // This handles cases where different Keys point to the same Product ID
-            const uniqueAddons = addons.filter(
-               (key) => productDetails[key].variantId !== baseObj.variantId
-            );
-
-            if (uniqueAddons.length > 0) {
-               const addonNames = uniqueAddons
-                  .map((key) => {
-                     variants.push(productDetails[key].variantId);
-                     return productDetails[key].name;
-                  })
-                  .join(' AND ');
-               combinedName = `${baseObj.name} AND ${addonNames}`;
+            // default behavior: base + addons (weight-loss handled below)
+            let suggestedKeys;
+            if (topic === 'weight-loss') {
+               suggestedKeys = ['4_STEP'];
+            } else {
+               suggestedKeys = [base, ...addons];
             }
 
-            const cartString = variants.map((id) => `${id}:1`).join(',');
-            const checkoutUrl = `https://liquidblenz.com/cart/${cartString}`;
+            const combinedName = suggestedKeys
+               .map((k) => productDetails[k]?.name || k)
+               .join(' AND ');
 
-            // select image based on how many products were included
-            const imageForCount = selectImageByCount(variants.length);
+            // Build unique variant list to avoid duplicate variantIds in cart string
+            const seen = new Set();
+            const variants = [];
+            suggestedKeys.forEach((k) => {
+               const vid = productDetails[k]?.variantId;
+               if (vid && !seen.has(vid)) {
+                  seen.add(vid);
+                  variants.push(vid);
+               }
+            });
+
+            const cartString = variants.length
+               ? variants.map((id) => `${id}:1`).join(',')
+               : '';
+            let checkoutUrl = cartString
+               ? `https://liquidblenz.com/cart/${cartString}`
+               : productDetails['4_STEP'].link;
+
+            let imageForCount = selectImageByCount(suggestedKeys.length);
+
+            if (topic === 'weight-loss') {
+               imageForCount = productDetails['4_STEP'].img;
+               checkoutUrl = productDetails['4_STEP'].link;
+            }
 
             setFinalCard({
                name: combinedName,
@@ -460,19 +521,18 @@ const Suggestions = () => {
                rating: 5,
                reviews: 8230,
                img: imageForCount,
-               checkoutUrl: checkoutUrl,
+               checkoutUrl,
             });
          } catch (error) {
             console.error('Error processing quiz results:', error);
             const fallback = productDetails['4_STEP'];
-            const img = selectImageByCount(1);
             setFinalCard({
                name: fallback.name,
                description: 'Complete detox system for deep cleanse.',
                rating: 5,
                reviews: 8230,
-               img: img,
-               checkoutUrl: `https://liquidblenz.com/cart/${fallback.variantId}:1`,
+               img: fallback.img || selectImageByCount(1),
+               checkoutUrl: fallback.link,
             });
          }
          setIsLoading(false);
@@ -553,12 +613,15 @@ const Suggestions = () => {
                               ({finalCard.reviews})
                            </span>
                         </div>
+
                         <a
                            href={finalCard.checkoutUrl}
+                           target='_blank'
+                           rel='noopener noreferrer'
                            style={{ width: '100%', textDecoration: 'none' }}
                         >
                            <button className='suggestion-card-btn'>
-                              Buy My Personalized Plan
+                              View My Personalized Plan
                            </button>
                         </a>
                      </div>
@@ -571,3 +634,4 @@ const Suggestions = () => {
 };
 
 export default Suggestions;
+// ...existing code...
