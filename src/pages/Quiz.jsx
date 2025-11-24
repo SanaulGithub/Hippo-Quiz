@@ -809,6 +809,25 @@ const quizzes = {
          ],
       },
       {
+         key: 'cleanse_type',
+         percent: 25,
+         title: 'Digestion & Gut Health',
+         subtitle:
+            "Answer a few quick questions and we'll recommend a plan tailored for you.",
+         question:
+            'Are you looking for a quick daily aid or a full body reset/cleanse?',
+         options: [
+            {
+               label: 'Full Body Reset (Deep cleanse)',
+               value: 'Full Body Reset (Deep cleanse)',
+            },
+            {
+               label: 'Quick Daily Aid (Maintenance)',
+               value: 'Quick Daily Aid (Maintenance)',
+            },
+         ],
+      },
+      {
          key: 'appetite',
          percent: 33,
          title: 'Digestion & Gut Health',

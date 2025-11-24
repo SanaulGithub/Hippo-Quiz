@@ -126,23 +126,33 @@ const chooseImmunityProductKey = (answers) => {
    return flags.size >= 3 ? 'DAILY_WELLNESS_PACK' : 'DETOX_4_STEP';
 };
 
-// Strict gender-based selection based ONLY on the stored question text:
-// "What is your biological sex?" -> value "Male" or "Female"
-// Case-insensitive comparison for safety.
+// Strict gender-based selection
 const chooseLibidoPerformanceKey = (answers) => {
    if (!answers || typeof answers !== 'object') return 'PERFORMANCE_FEMALE';
-
    const sexKey = Object.keys(answers).find(
       (k) => k.trim().toLowerCase() === 'what is your biological sex?'
    );
-
    if (sexKey) {
       const val = String(answers[sexKey]).trim().toLowerCase();
       if (val === 'male') return 'PERFORMANCE_MALE';
       if (val === 'female') return 'PERFORMANCE_FEMALE';
    }
-
    return 'PERFORMANCE_FEMALE';
+};
+
+const chooseDigestionProductKey = (answers) => {
+   if (!answers || typeof answers !== 'object') return 'DETOX_4_STEP';
+
+   const hasQuickDailyAid = Object.values(answers).some((v) => {
+      if (typeof v !== 'string') return false;
+      const txt = v;
+      return (
+         txt.includes('quick daily aid (maintenance)') ||
+         txt.includes('Quick Daily Aid (Maintenance)')
+      );
+   });
+
+   return hasQuickDailyAid ? 'DAILY_WELLNESS_PACK' : 'DETOX_4_STEP';
 };
 
 const resolveProductForTopic = (topic, answers) => {
@@ -160,7 +170,7 @@ const resolveProductForTopic = (topic, answers) => {
       case 'libido-balance':
          return chooseLibidoPerformanceKey(answers);
       case 'digestion-gut-health':
-         return 'DETOX_4_STEP';
+         return chooseDigestionProductKey(answers);
       default:
          return 'DETOX_4_STEP';
    }
