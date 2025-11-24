@@ -706,7 +706,19 @@ const quizzes = {
          ],
       },
       {
-         percent: 39,
+         key: 'gender',
+         percent: 46,
+         title: 'Libido & Balance',
+         subtitle:
+            "Answer a few quick questions and we'll recommend a plan tailored for you.",
+         question: 'What is your biological sex?',
+         options: [
+            { label: 'Male', value: 'male' },
+            { label: 'Female', value: 'female' },
+         ],
+      },
+      {
+         percent: 54,
          title: 'Libido & Balance',
          subtitle: 'Your energy, hormones, and mood are all connected.',
          info: {
@@ -718,7 +730,7 @@ const quizzes = {
       },
       {
          key: 'exercise_frequency',
-         percent: 53,
+         percent: 63,
          title: 'Libido & Balance',
          subtitle:
             "Answer a few quick questions and we'll recommend a plan tailored for you.",
@@ -732,7 +744,7 @@ const quizzes = {
       },
       {
          key: 'stress_frequency',
-         percent: 67,
+         percent: 75,
          title: 'Libido & Balance',
          subtitle:
             "Answer a few quick questions and we'll recommend a plan tailored for you.",
