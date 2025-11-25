@@ -6,7 +6,7 @@ import WeightLossImg from '../assets/weight-loss.webp';
 import FocusImg from '../assets/Focus-and-Clarity-Bundle.png';
 import FocusShilajitImg from '../assets/Focus-Clarity-Bundle-add-on-Pure-shilajit.png';
 import TheDailyWellnessPackImg from '../assets/Thedailywellnesspack.jpg';
-import DailyPerformanceFemaleImg from '../assets/DailyPerformanceBundleforFemale.jpg';
+import DailyPerformanceFemaleImg from '../assets/DailyPerformanceBundleForFemale.png';
 import DailyPerformanceMaleImg from '../assets/DailyPerformanceBundleForMale.png';
 
 const productDetails = {
